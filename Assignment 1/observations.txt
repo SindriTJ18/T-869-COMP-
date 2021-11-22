@@ -1,0 +1,23 @@
+-The processing time for one video frame or image?
+The processing time for one video frame is around 1/30 seconds. 
+But since the webcam is 30fps the processing time has headroom
+
+-How does the processing time change when you add the bright spot detection?
+In my case the processing time did not increase when drawing the framerate nor adding the bright spot detection.
+(FPS remained at 30FPS)
+
+-Is the processing time identical when you do not display the image?
+Yes the FPS value still hovers around the 30fps mark.
+
+-How does your for-loop implementation compare to the built-in function?
+When using my double for loop for only the bright spot detection the processing time increases to around 1/20 sec
+on average. 
+This method is less efficient than running both the reddest and brightest spot detection at the same
+time with the built-in functions.
+
+-Moving your hand in front of the camera, estimate the latency between image capture and display.
+I would estimate around 50-100ms
+
+-Is the latency different when capturing from a mobile phone?
+Using the app iVCam on my phone, to then stream to my PC the latency difference is not as drastic as i thought.
+Maybe around 50ms slower at max?
