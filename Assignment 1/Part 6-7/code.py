@@ -39,7 +39,8 @@ def brightest_for(raw):
 
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(
+        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
     sTime = 0
     fps = 0
 

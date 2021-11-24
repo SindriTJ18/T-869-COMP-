@@ -6,11 +6,11 @@ import numpy as np
 def plot_box(raw, gray):
     max_loc_x = cv2.minMaxLoc(gray)[3][0]
     max_loc_y = cv2.minMaxLoc(gray)[3][1]
-    s = 25
+    s = 15
     coord1 = (max_loc_x+s, max_loc_y+s)
     coord2 = (max_loc_x-s, max_loc_y-s)
     color = (255, 100, 0)
-    t = 5
+    t = 2
 
     gray_box = np.copy(raw)
     gray_box = cv2.rectangle(gray_box, coord1, coord2, color, t)
@@ -21,7 +21,7 @@ def plot_box_red(raw, hsv, red_mask, gray_box):
     (_, _, _, point) = cv2.minMaxLoc(hsv[:, :, 1], red_mask)
 
     gray_box = np.copy(gray_box)
-    gray_box = cv2.circle(gray_box, point, 8, (0, 0, 255), 5)
+    gray_box = cv2.circle(gray_box, point, 8, (0, 255, 0), 2)
     return gray_box
 
 
@@ -38,14 +38,14 @@ def main():
         # DISPLAY FPS TEXT
         fps_text = "FPS: {:.2f}".format(fps)
         cv2.putText(raw, fps_text, (5, 30),
-                    cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 1)
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 1)
 
         # CREATE GRAYSCALE VERSION
         gray = cv2.cvtColor(raw, cv2.COLOR_BGR2GRAY)
         # CREATE HSV VERSION
         hsv = cv2.cvtColor(raw, cv2.COLOR_BGR2HSV)
         # MASK WITHIN THE RED RANGE
-        low_red = np.array([161, 155, 84])
+        low_red = np.array([161, 155, 10])
         high_red = np.array([179, 255, 255])
         red_mask = cv2.inRange(hsv, low_red, high_red)
         # LOCATE BRIGHTEST POINT
@@ -53,8 +53,9 @@ def main():
         # LOCATE REDDEST POINT
         gray_box = plot_box_red(raw, hsv, red_mask, gray_box)
         # print(fps)
+        gray_box = cv2.resize(gray_box, (1600, 900))
         cv2.imshow('Webcam', gray_box)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(10) & 0xFF == ord('q'):
             break
         sTime = eTime
 
