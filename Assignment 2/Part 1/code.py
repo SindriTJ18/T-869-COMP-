@@ -38,7 +38,7 @@ def main():
             p = edge_points[i]
             d = LA.norm(np.cross(p2-p1, p1-edge_points[i]))/LA.norm(p2-p1)
             # print(d)
-            if(d < 10):
+            if(d < 5):
                 cv2.circle(crop_frame, (p[1], p[0]), 1, (0, 0, 255), -1)
         plot_points(crop_frame, p1, p2)
         crop_frame = cv2.resize(crop_frame, (1280, 760))
