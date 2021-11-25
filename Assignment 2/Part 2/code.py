@@ -5,7 +5,7 @@ from numpy.core.numeric import empty_like
 from numpy.lib.polynomial import polyfit
 
 # GRAB WEBCAM
-raw = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+raw = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 
 
 def find_best_points(edge_points):
@@ -41,7 +41,7 @@ def main():
                           apertureSize=3, L2gradient=True)
         edge_points = np.argwhere(canny != 0)
         n = edge_points.shape[0]
-        edge_points = edge_points[:n:25]
+        edge_points = edge_points[:n:20]
         for h in range(4):
             # ROLL THROUGH 'X' AMOUNT OF POINT PAIRS
             most_inside = 0
