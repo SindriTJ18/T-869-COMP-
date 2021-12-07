@@ -26,7 +26,8 @@ def plot_box_red(raw, hsv, red_mask, gray_box):
 
 
 def main():
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(
+        "https://g0.ipcamlive.com/streams/01ia0gl7tos9qojfp/")
     sTime = 0
     fps = 0
 
