@@ -29,8 +29,11 @@ def findObjects(outputs, img, obj_list):
     confs = []
     for outputs in outputs:
         for det in outputs:
+            # THE OBJECTS
             scores = det[5:]
+            # WHICH ONE IS MOST LIKELY
             classId = np.argmax(scores)
+            # HOW CONFIDENT
             confidence = scores[classId]
             if confidence > confThreshold:
                 w, h = int(det[2]*wT), int(det[3]*hT)
@@ -62,13 +65,15 @@ def draw_fps(startTime):
 
 
 def draw_recall(recall):
-    recall_text = "Recall: {}".format(recall)
-    cv2.putText(img, recall_text, (450, 450),
+    recall_text = "Precision: {} %".format(recall)
+    cv2.putText(img, recall_text, (380, 450),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
 
 
 while True:
+    # START FOR FPS COUNTER
     startTime = time.time()
+    # GRAB IMAGE
     success, img = cap.read()
 
     blob = cv2.dnn.blobFromImage(
@@ -77,12 +82,15 @@ while True:
 
     layerNames = net.getLayerNames()
     outputNames = []
+    # SHIFT GET OUT LAYERS ONE LEFT
     for i in (net.getUnconnectedOutLayers() - [1, 1, 1]):
         outputNames.append(layerNames[i])
+    # FORWARD TO YOLO
     outputs = net.forward(outputNames)
+    # FUNC
     obj_list = findObjects(outputs, img, obj_list)
     if (len(obj_list) > 99):
-        recall = obj_list.count(64)
+        recall = obj_list.count(41)
         print(recall)
         obj_list = []
     draw_recall(recall)
